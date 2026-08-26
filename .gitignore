@@ -1,0 +1,36 @@
+# Private application/planning material -- never committed.
+/private-docs/
+
+# Parked material (the earlier multi-page site and working notes): kept on
+# disk for later, invisible to git and CI.
+/parked/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated experiment artifacts (immutable outputs live outside git history;
+# released results are published as checksum-locked bundles instead).
+/artifacts/*
+!/artifacts/.gitkeep
+
+# Report: only sources are tracked; staged data and compiled PDFs are generated.
+/report/generated/
+*.pdf
+!tests/fixtures/**/*.pdf
+
+# Website: dependencies and builds.
+/site/node_modules/
+/site/dist/
+
+# Local tool installs and scratch.
+/.tools/
+*.tmp
+.DS_Store

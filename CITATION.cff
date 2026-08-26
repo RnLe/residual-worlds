@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software or the study design, please cite it as below."
+title: "Residual Worlds: residual dynamics learning for data-efficient model-predictive control"
+type: software
+authors:
+  - family-names: Lehner
+    given-names: Rene-Marcel
+version: 0.1.0
+date-released: "2026-08-27"
+repository-code: "https://github.com/RnLe/residual-worlds"
+abstract: >-
+  A controlled simulation study on a torque-controlled planar two-link arm.
+  Under matched scarce target-world transition budgets, it compares unchanged
+  nominal physics, bounded fitted physics, a black-box neural dynamics
+  ensemble, a physics-residual ensemble, and an exact-dynamics reference,
+  all consumed by one frozen CEM-based model-predictive controller, with
+  paired closed-loop task success as the primary endpoint.
