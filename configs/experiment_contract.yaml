@@ -1,0 +1,456 @@
+# Residual Worlds -- experiment contract (draft).
+#
+# This file is the single mutable draft of every scientific decision.
+# Freezing it produces protocols/<protocol_id>/ with an immutable copy,
+# the expanded job manifests, and a lock recording how each entry in
+# `unresolved_decisions` was resolved. After the freeze, nothing in the
+# frozen copy may change without creating a superseding protocol.
+#
+# Candidate values below are runnable defaults. Entries listed in
+# `unresolved_decisions` may still change before the freeze, but only
+# at their assigned gate and only from method-blind evidence
+# (simulator checks, nominal/exact-reference calibration, throughput
+# measurements) -- never from fitted/black-box/residual outcomes.
+
+schema_version: 1
+
+protocol:
+  project: residual_worlds
+  version: "0.1-draft"
+  status: DRAFT                    # DRAFT | FROZEN | SUPERSEDED
+  primary_claim: residual_vs_blackbox_closed_loop_success
+  require_clean_worktree: true
+  freeze_parent_commit: AUTO
+
+unresolved_decisions:
+  - id: final_numerics
+    gate: G2
+    resolution_mode: deterministic_selector
+    paths: [numerics.substeps_per_control_step]
+  - id: standard_world_magnitudes
+    gate: G2
+    resolution_mode: method_blind_human_calibration
+    paths:
+      - worlds.payload_standard.payload_kg
+      - worlds.friction_standard.friction
+      - worlds.actuator_standard.actuator
+      - worlds.composite_standard.payload_kg
+      - worlds.composite_standard.friction
+      - worlds.composite_standard.actuator
+  - id: elastic_magnitude
+    gate: G2
+    resolution_mode: deterministic_selector
+    paths: [worlds.elastic_unseen.elastic_coupling_nm]
+  - id: task_geometry_and_speed
+    gate: G2
+    resolution_mode: method_blind_human_calibration
+    paths:
+      - task.target_radius_m
+      - task.target_speed_threshold_m_s
+      - task.near_target_velocity_radius_m
+      - task.target_dwell_steps
+      - task.arm_safety_radius_m
+      - task.scenario_generator
+  - id: task_cost
+    gate: G2
+    resolution_mode: method_blind_human_calibration
+    paths: [task.cost]
+  - id: acceleration_output_scale
+    gate: G3
+    resolution_mode: method_blind_human_calibration
+    paths: [data.acceleration_scale_rad_s2]
+  - id: exploration_contract
+    gate: G3
+    resolution_mode: method_blind_human_calibration
+    paths: [data.exploration]
+  - id: support_threshold
+    gate: G3
+    resolution_mode: method_blind_human_calibration
+    paths: [analysis.support_metric.threshold]
+  - id: common_training_updates
+    gate: G6
+    resolution_mode: deterministic_selector
+    paths: [training.updates]
+  - id: controller_profile
+    gate: G2
+    resolution_mode: deterministic_selector
+    paths:
+      - planning.candidates
+      - planning.elites
+      - planning.replan_every_steps
+      - planning.execute_actions_per_plan
+  - id: evaluation_scope
+    gate: G7
+    resolution_mode: deterministic_selector
+    paths:
+      - evaluation.scope_profile
+      - evaluation.include_intermediate_control_budgets
+
+calibration_rules:
+  # Method-blind human calibration: at most six full proposal tuples per
+  # gate, every proposal and its visible evidence preserved, and no
+  # fitted/black-box/residual or protected outcome available while
+  # deciding. Exceeding six proposals blocks the protocol.
+  maximum_proposals_per_gate: 6
+  forbidden_evidence: [fitted_physics, blackbox, residual, protected_outcomes]
+
+numerics:
+  truth_dtype: float64
+  planning_dtype_all_methods: float32
+  control_dt_s: 0.05
+  integrator: rk4
+  substeps_per_control_step: 1
+  allowed_substep_candidates: [1, 2, 5]
+  substep_selection_rule: smallest_passing_solve_ivp_stress_grid
+  integration_gate:
+    one_step_normalized_error_p99_max: 1.0e-4
+    one_step_normalized_error_absolute_max: 5.0e-4
+    eight_second_normalized_rmse_max: 2.0e-3
+    eight_second_normalized_error_absolute_max: 1.0e-2
+    terminal_event_classification_must_match: true
+    float32_vs_float64_one_step_normalized_error_max: 1.0e-4
+  reference_integrator: scipy_solve_ivp
+  reference_rtol: 1.0e-11
+  reference_atol: 1.0e-13
+  deterministic_algorithms: true
+  root_seed: 730241
+
+arm:
+  coordinate_convention:
+    q1: shoulder_ccw_from_positive_horizontal
+    q2: elbow_relative_to_link_1
+    gravity_direction: negative_y
+  link_length_m: [0.5, 0.5]
+  com_length_m: [0.25, 0.25]
+  link_mass_kg: [1.0, 1.0]
+  com_inertia_kg_m2: [0.0208333333333333, 0.0208333333333333]
+  nominal_viscous_nm_s_rad: [0.05, 0.05]
+  gravity_m_s2: 9.81
+  torque_limit_nm: [4.0, 4.0]
+  q_min_rad: [-0.5235987756, -2.6179938780]
+  q_max_rad: [2.6179938780, 2.6179938780]
+  speed_limit_rad_s: [8.0, 8.0]
+  state_clipping_forbidden: true
+
+worlds:
+  # Every composed world obeys one canonical equation:
+  #   M_w(q) qdd + c_w(q, qd) + g_w(q) + tau_fric(qd)
+  #     = tau_act(u) + tau_elastic(q).
+  # Payload changes M/c/g; the friction law REPLACES nominal viscous
+  # damping (never double-counted); the actuator transform applies to
+  # the commanded torque; elastic coupling is an extra generalized
+  # force. Disabled components reduce exactly to the nominal terms.
+  # The standard payload/friction/actuator components must equal their
+  # copies inside composite_standard byte-for-byte (validated).
+  nominal_sanity:
+    components: []
+    role: sanity
+  payload_standard:
+    components: [payload]
+    payload_kg: 0.25
+    role: mechanism
+  friction_standard:
+    components: [nonlinear_friction]
+    friction:
+      viscous_nm_s_rad: [0.05, 0.05]
+      coulomb_nm: [0.20, 0.12]
+      low_speed_peak_nm: [0.28, 0.18]
+      stribeck_velocity_rad_s: [0.35, 0.30]
+      smoothing_velocity_rad_s: [0.04, 0.04]
+    role: mechanism
+  actuator_standard:
+    components: [actuator]
+    actuator:
+      gain: [0.86, 1.12]
+      deadzone_nm: [0.12, 0.08]
+    role: mechanism
+  composite_standard:
+    components: [payload, nonlinear_friction, actuator]
+    payload_kg: 0.25
+    friction:
+      viscous_nm_s_rad: [0.05, 0.05]
+      coulomb_nm: [0.20, 0.12]
+      low_speed_peak_nm: [0.28, 0.18]
+      stribeck_velocity_rad_s: [0.35, 0.30]
+      smoothing_velocity_rad_s: [0.04, 0.04]
+    actuator:
+      gain: [0.86, 1.12]
+      deadzone_nm: [0.12, 0.08]
+    role: primary
+  composite_low:
+    base_world: composite_standard
+    magnitude_scale: 0.6
+    role: transfer
+  composite_high:
+    base_world: composite_standard
+    magnitude_scale: 1.4
+    role: transfer
+  elastic_unseen:
+    base_world: composite_standard
+    additional_components: [elastic_coupling]
+    elastic_coupling_nm: 0.18
+    role: exploratory_transfer
+
+world_access:
+  # Magnitude scaling s: payload, Coulomb, peak, and dead zone scale
+  # directly; gain maps to 1 + s * (gain - 1); viscous, Stribeck, and
+  # smoothing velocities never scale (s = 0 recovers nominal).
+  learned_development_worlds_before_G9: [nominal_sanity, composite_standard]
+  protected_until_G9: [composite_low, composite_high, elastic_unseen]
+  permitted_pre_G9_checks_on_protected_worlds:
+    [target_only_numerics, energy_consistency, exact_reference_feasibility]
+  elastic_selection:
+    candidates_nm: [0.12, 0.18, 0.24]
+    candidate_order: ascending
+    exact_reference_success_min_of_40: 38
+    selection_rule: largest_candidate_passing_every_check
+
+task:
+  name: ordered_three_target_reach
+  target_count: 3
+  target_radius_m: 0.04
+  target_speed_threshold_m_s: 0.10
+  near_target_velocity_radius_m: 0.08
+  target_dwell_steps: 4
+  timeout_steps: 160
+  obstacle_shape: circle
+  arm_safety_radius_m: 0.02
+  swept_collision_max_workspace_step_m: 0.002
+  swept_collision_inflation_m: 0.002
+  # Event precedence per executed transition: numerical/safety failure
+  # first, then dwell/target update and task completion, then timeout
+  # after the 160th executed transition. A safe transition 159 -> 160
+  # may still complete the task. Time-limit is truncation, not
+  # physical termination.
+  scenario_generator:
+    version: 1
+    banks: {calibration: 40, pilot: 12, training_task: 24, protected: 24}
+    maximum_attempts_per_scenario: 20000
+    joint_structural_strata: 12   # six target-sector orders x obstacle chord 1 or 2
+    initial_state:
+      q1_rad: [0.10, 2.20]
+      q2_rad: [-1.60, 1.60]
+      qd_each_rad_s: [-0.10, 0.10]
+      hard_joint_margin_rad: 0.12
+      minimum_signed_obstacle_clearance_m: 0.05
+    target_sampling:
+      x_sectors_m:
+        left: [-0.65, -0.18]
+        middle: [-0.18, 0.18]
+        right: [0.18, 0.65]
+      y_m: [0.18, 0.78]
+      radial_distance_m: [0.35, 0.88]
+      minimum_pairwise_separation_m: 0.18
+      minimum_initial_to_first_distance_m: 0.20
+      total_ordered_chord_length_m: [0.70, 1.80]
+    obstacle_sampling:
+      chord_fraction: [0.35, 0.65]
+      radius_m: [0.065, 0.10]
+      perpendicular_offset_in_obstacle_radii: [-0.5, 0.5]
+      center_x_m: [-0.55, 0.55]
+      center_y_m: [0.15, 0.72]
+      minimum_target_center_clearance_beyond_radius_m: 0.09
+    structural_feasibility:
+      ik_hard_limit_margin_rad: 0.04
+      obstacle_inflation_beyond_arm_radius_m: 0.02
+      q1_grid_points: 121
+      q2_grid_points: 161
+      edge_resolution_bound_m: 0.002
+  cost:
+    position: 80.0
+    near_target_velocity: 2.0
+    torque: 0.01
+    torque_change: 0.05
+    obstacle_barrier: 200.0
+    joint_barrier: 100.0
+    terminal_position: 240.0
+    remaining_target: 50.0
+    invalid_candidate: 1000000.0
+    obstacle_soft_margin_m: 0.06
+    joint_soft_margin_rad: 0.12
+
+data:
+  collection_unit_valid_transitions: 64
+  adaptation_budgets_total: [256, 1024, 2048, 8192, 16384]
+  primary_budget_total: 2048
+  train_fraction: 0.75
+  validation_fraction: 0.25
+  prediction_test_transitions: 4096
+  split_unit: collection_unit
+  budgets_are_nested: true
+  rollout_horizons: [1, 5, 10, 20]
+  exploration:
+    band_limited_random_fraction: 0.40
+    multisine_fraction: 0.30
+    nominal_mpc_perturbed_fraction: 0.30
+    torque_envelope_nm: [2.8, 2.8]
+    band_limited_random:
+      sample_rate_hz: 20.0
+      filter: butterworth_order_4
+      cutoff_hz: 1.5
+      burn_in_samples: 128
+    multisine:
+      frequencies_hz: [0.20, 0.45, 0.80, 1.20, 1.80]
+    nominal_mpc_perturbation:
+      scenario_bank: training_task
+      low_nm: -0.35
+      high_nm: 0.35
+      hold_steps: 2
+  reset_strata:
+    shoulder_rad:
+      bands: [[-0.35, 0.45], [0.45, 1.35], [1.35, 2.35]]
+      weights: [0.25, 0.50, 0.25]
+    elbow_rad:
+      bands: [[-2.20, -0.35], [-0.35, 0.35], [0.35, 2.20]]
+      weights: [0.35, 0.30, 0.35]
+    velocity_regimes:
+      low_abs_max_rad_s: 0.4
+      moderate_abs_range_rad_s: [0.4, 1.5]
+      weights: [0.60, 0.40]
+  model_inputs:
+    [sin_q1, cos_q1, sin_q2, cos_q2, qd1_scaled, qd2_scaled, u1_scaled, u2_scaled]
+  velocity_scale_rad_s: 4.0
+  acceleration_scale_rad_s2: [50.0, 75.0]
+  empirical_normalizer_forbidden: true
+
+models:
+  required: [nominal, fitted_physics, blackbox, residual, oracle]
+  fitted_physics:
+    parameters: [payload_kg, viscous_1, viscous_2, actuator_gain_1, actuator_gain_2]
+    bounds:
+      payload_kg: [0.0, 0.8]
+      viscous_1: [0.0, 0.5]
+      viscous_2: [0.0, 0.5]
+      actuator_gain_1: [0.5, 1.5]
+      actuator_gain_2: [0.5, 1.5]
+    deterministic_restarts: 8
+  neural_common:
+    input_dim: 8
+    hidden_widths: [128, 128, 128]
+    activation: silu
+    output_dim: 2
+    output: joint_acceleration
+    ensemble_members: 3
+  residual:
+    final_layer_zero_init: true
+    residual_penalty_primary: 0.0
+  sanity_tolerances:
+    nominal_sanity_residual_success_degradation_absolute_max: 0.02
+    nominal_sanity_residual_twenty_step_rmse_ratio_to_blackbox_max: 1.05
+
+training:
+  optimizer: adamw
+  updates: 6000
+  allowed_update_candidates: [4000, 6000, 8000]
+  update_selection_relative_tolerance: 1.02
+  one_step_batch_size: 256
+  rollout_batch_size: 64
+  rollout_horizon: 5
+  learning_rate_initial: 3.0e-4
+  learning_rate_final: 3.0e-5
+  schedule: cosine
+  weight_decay: 1.0e-5
+  gradient_norm_clip: 1.0
+  validation_every_updates: 250
+  checkpoint_rule: earliest_minimum_mean_normalized_five_step_validation_loss
+  one_step_weight: 1.0
+  five_step_weight: 1.0
+
+planning:
+  method: cem_mpc
+  profile: A
+  allowed_profiles:
+    A: {candidates: 256, elites: 32, replan_every_steps: 1, execute_actions_per_plan: 1}
+    B: {candidates: 128, elites: 16, replan_every_steps: 1, execute_actions_per_plan: 1}
+    C: {candidates: 128, elites: 16, replan_every_steps: 2, execute_actions_per_plan: 2}
+  horizon_steps: 20
+  action_knots: 10
+  candidates: 256
+  elites: 32
+  iterations: 4
+  initial_latent_std: 1.0
+  latent_std_floor: 0.05
+  old_distribution_retention: 0.2
+  replan_every_steps: 1
+  execute_actions_per_plan: 1
+  g2_calibration:
+    exact_reference_worlds:
+      [payload_standard, friction_standard, actuator_standard, composite_standard]
+    exact_reference_success_min_each_of_40: 38
+    nominal_composite_success_range_inclusive_of_40: [8, 28]
+    evaluation_ceiling_gpu_hours: 24.0
+    required_reserve_fraction: 0.20
+
+evaluation:
+  scope_profile: balanced
+  allowed_scope_profiles: [essential, balanced, expanded]
+  scope_preference_order: [expanded, balanced, essential]
+  pipeline_replicates_primary: 8
+  scenario_families_primary: 24
+  primary_world: composite_standard
+  primary_budget: 2048
+  primary_methods: [residual, blackbox]
+  all_reference_methods: [nominal, fitted_physics, blackbox, residual, oracle]
+  required_control_budgets: [256, 2048, 16384]
+  intermediate_control_budgets: [1024, 8192]
+  include_intermediate_control_budgets: false
+  nonprimary_budget_pipeline_replicates: 4
+  nonprimary_budget_scenario_families: 12
+  prediction_budgets: [256, 1024, 2048, 8192, 16384]
+  prediction_pipeline_replicates: 4
+  additional_primary_budget_prediction_pipelines: 4
+  mechanism_worlds: [nominal_sanity, payload_standard, friction_standard, actuator_standard]
+  mechanism_pipeline_replicates: {balanced: 2, expanded: 4}
+  mechanism_scenario_families: {balanced: 12, expanded: 24}
+  transfer_worlds: [composite_low, composite_high, elastic_unseen]
+  transfer_pipeline_replicates: {balanced: 2, expanded: 8}
+  transfer_scenario_families: 12
+  maximum_attempts_total: 2
+
+analysis:
+  primary_outcome: task_success
+  primary_contrast:
+    id: residual_vs_blackbox_success
+    weights: {residual: 1.0, blackbox: -1.0}
+  practical_effect_threshold_absolute: 0.10
+  secondary_confirmatory_contrasts:
+    - id: residual_vs_fitted_success
+      weights: {residual: 1.0, fitted_physics: -1.0}
+    - id: residual_vs_nominal_success
+      weights: {residual: 1.0, nominal: -1.0}
+  bootstrap:
+    replicates: 10000
+    interval: percentile_95
+    protected_scenarios_per_stratum: 2
+  support_metric:
+    applicable_methods: [fitted_physics, blackbox, residual]
+    threshold: 2.5
+  result_states:
+    [no_results, supports_primary_direction, small_or_inconclusive,
+     opposite_direction, protocol_deviation]
+
+media:
+  # All visual selections are outcome-independent: the visual pipeline
+  # is the smallest precomputable pipeline-descriptor hash, the hero
+  # scenario the smallest structurally eligible protected scenario
+  # hash, the failure gallery the smallest evaluation-job hash within
+  # each declared method/failure class.
+  hero:
+    world: composite_standard
+    budget: 2048
+    methods: [nominal, fitted_physics, blackbox, residual]
+  residual_field:
+    grid_shape: [41, 41]
+    q2_range_rad: [-2.0, 2.0]
+    qd2_range_rad_s: [-4.0, 4.0]
+    fixed: {q1_rad: 0.7853981633974483, qd1_rad_s: 0.0, u_nm: [0.0, 0.0]}
+  render:
+    width: 1280
+    height: 720
+    background: "#F7F7F3"
+    fps: 30
+
+release:
+  pages_base: /residual-worlds/
+  require_content_status: final
+  content_status_values: [schematic, pilot, final]
