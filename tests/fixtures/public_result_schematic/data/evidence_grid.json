@@ -1,0 +1,405 @@
+{
+  "rows": [
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-0",
+      "method": "nominal",
+      "replicate": 0,
+      "scenario_id": "schematic-scenario-0",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-1",
+      "method": "nominal",
+      "replicate": 1,
+      "scenario_id": "schematic-scenario-1",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-2",
+      "method": "nominal",
+      "replicate": 2,
+      "scenario_id": "schematic-scenario-2",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-3",
+      "method": "nominal",
+      "replicate": 3,
+      "scenario_id": "schematic-scenario-3",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-4",
+      "method": "nominal",
+      "replicate": 4,
+      "scenario_id": "schematic-scenario-4",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-5",
+      "method": "nominal",
+      "replicate": 5,
+      "scenario_id": "schematic-scenario-5",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-6",
+      "method": "nominal",
+      "replicate": 6,
+      "scenario_id": "schematic-scenario-6",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-nominal-7",
+      "method": "nominal",
+      "replicate": 7,
+      "scenario_id": "schematic-scenario-7",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-0",
+      "method": "fitted_physics",
+      "replicate": 0,
+      "scenario_id": "schematic-scenario-0",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-1",
+      "method": "fitted_physics",
+      "replicate": 1,
+      "scenario_id": "schematic-scenario-1",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-2",
+      "method": "fitted_physics",
+      "replicate": 2,
+      "scenario_id": "schematic-scenario-2",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-3",
+      "method": "fitted_physics",
+      "replicate": 3,
+      "scenario_id": "schematic-scenario-3",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-4",
+      "method": "fitted_physics",
+      "replicate": 4,
+      "scenario_id": "schematic-scenario-4",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-5",
+      "method": "fitted_physics",
+      "replicate": 5,
+      "scenario_id": "schematic-scenario-5",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-6",
+      "method": "fitted_physics",
+      "replicate": 6,
+      "scenario_id": "schematic-scenario-6",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-fitted_physics-7",
+      "method": "fitted_physics",
+      "replicate": 7,
+      "scenario_id": "schematic-scenario-7",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-0",
+      "method": "blackbox",
+      "replicate": 0,
+      "scenario_id": "schematic-scenario-0",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-1",
+      "method": "blackbox",
+      "replicate": 1,
+      "scenario_id": "schematic-scenario-1",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-2",
+      "method": "blackbox",
+      "replicate": 2,
+      "scenario_id": "schematic-scenario-2",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-3",
+      "method": "blackbox",
+      "replicate": 3,
+      "scenario_id": "schematic-scenario-3",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-4",
+      "method": "blackbox",
+      "replicate": 4,
+      "scenario_id": "schematic-scenario-4",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-5",
+      "method": "blackbox",
+      "replicate": 5,
+      "scenario_id": "schematic-scenario-5",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-6",
+      "method": "blackbox",
+      "replicate": 6,
+      "scenario_id": "schematic-scenario-6",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-blackbox-7",
+      "method": "blackbox",
+      "replicate": 7,
+      "scenario_id": "schematic-scenario-7",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-0",
+      "method": "residual",
+      "replicate": 0,
+      "scenario_id": "schematic-scenario-0",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-1",
+      "method": "residual",
+      "replicate": 1,
+      "scenario_id": "schematic-scenario-1",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-2",
+      "method": "residual",
+      "replicate": 2,
+      "scenario_id": "schematic-scenario-2",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-3",
+      "method": "residual",
+      "replicate": 3,
+      "scenario_id": "schematic-scenario-3",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-4",
+      "method": "residual",
+      "replicate": 4,
+      "scenario_id": "schematic-scenario-4",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-5",
+      "method": "residual",
+      "replicate": 5,
+      "scenario_id": "schematic-scenario-5",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-6",
+      "method": "residual",
+      "replicate": 6,
+      "scenario_id": "schematic-scenario-6",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-residual-7",
+      "method": "residual",
+      "replicate": 7,
+      "scenario_id": "schematic-scenario-7",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-0",
+      "method": "oracle",
+      "replicate": 0,
+      "scenario_id": "schematic-scenario-0",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-1",
+      "method": "oracle",
+      "replicate": 1,
+      "scenario_id": "schematic-scenario-1",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-2",
+      "method": "oracle",
+      "replicate": 2,
+      "scenario_id": "schematic-scenario-2",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-3",
+      "method": "oracle",
+      "replicate": 3,
+      "scenario_id": "schematic-scenario-3",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-4",
+      "method": "oracle",
+      "replicate": 4,
+      "scenario_id": "schematic-scenario-4",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-5",
+      "method": "oracle",
+      "replicate": 5,
+      "scenario_id": "schematic-scenario-5",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-6",
+      "method": "oracle",
+      "replicate": 6,
+      "scenario_id": "schematic-scenario-6",
+      "success": true,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "job_id": "schematic-oracle-7",
+      "method": "oracle",
+      "replicate": 7,
+      "scenario_id": "schematic-scenario-7",
+      "success": false,
+      "termination_code": "TIMEOUT_PARTIAL_TARGETS",
+      "world_id": "composite_standard"
+    }
+  ],
+  "watermark": "SCHEMATIC DATA - NOT RESULTS"
+}

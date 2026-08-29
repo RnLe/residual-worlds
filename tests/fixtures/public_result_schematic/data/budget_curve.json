@@ -1,0 +1,61 @@
+{
+  "note": "SCHEMATIC DATA - NOT RESULTS",
+  "series": {
+    "blackbox": [
+      {
+        "budget": 256,
+        "episodes": 48,
+        "success_rate": 0.4
+      },
+      {
+        "budget": 2048,
+        "episodes": 48,
+        "success_rate": 0.45
+      },
+      {
+        "budget": 16384,
+        "episodes": 48,
+        "success_rate": 0.5
+      }
+    ],
+    "fitted_physics": [
+      {
+        "budget": 256,
+        "episodes": 48,
+        "success_rate": 0.3
+      },
+      {
+        "budget": 2048,
+        "episodes": 48,
+        "success_rate": 0.35
+      },
+      {
+        "budget": 16384,
+        "episodes": 48,
+        "success_rate": 0.4
+      }
+    ],
+    "residual": [
+      {
+        "budget": 256,
+        "episodes": 48,
+        "success_rate": 0.5
+      },
+      {
+        "budget": 2048,
+        "episodes": 48,
+        "success_rate": 0.55
+      },
+      {
+        "budget": 16384,
+        "episodes": 48,
+        "success_rate": 0.6
+      }
+    ]
+  },
+  "success_axis": [
+    0.0,
+    1.0
+  ],
+  "world_id": "composite_standard"
+}

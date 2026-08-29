@@ -1,0 +1,75 @@
+{
+  "rows": [
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "nominal",
+      "nonfinite": 1,
+      "success_rate": 0.3,
+      "successes": 58,
+      "timeout": 118,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "fitted_physics",
+      "nonfinite": 1,
+      "success_rate": 0.45,
+      "successes": 86,
+      "timeout": 90,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "blackbox",
+      "nonfinite": 1,
+      "success_rate": 0.4,
+      "successes": 77,
+      "timeout": 99,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "residual",
+      "nonfinite": 1,
+      "success_rate": 0.55,
+      "successes": 106,
+      "timeout": 70,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "oracle",
+      "nonfinite": 1,
+      "success_rate": 0.8,
+      "successes": 154,
+      "timeout": 22,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    }
+  ],
+  "watermark": "SCHEMATIC DATA - NOT RESULTS"
+}

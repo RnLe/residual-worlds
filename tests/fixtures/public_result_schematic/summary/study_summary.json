@@ -1,0 +1,20 @@
+{
+  "design": {
+    "methods": [
+      "nominal",
+      "fitted_physics",
+      "blackbox",
+      "residual",
+      "oracle"
+    ],
+    "pipelines": 8,
+    "primary_budget": 2048,
+    "primary_world": "composite_standard",
+    "scenarios": 24
+  },
+  "question": "Placeholder question text.",
+  "status_note": "SCHEMATIC DATA - NOT RESULTS",
+  "tagline": "Keep the physics. Learn the mismatch.",
+  "title": "Residual Worlds",
+  "watermark": "SCHEMATIC DATA - NOT RESULTS"
+}

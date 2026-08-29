@@ -1,0 +1,14 @@
+{
+  "budget": 2048,
+  "contrast_id": "residual_vs_blackbox_success",
+  "estimate": 0.12,
+  "holm_adjusted_p": null,
+  "interpretation_state": "no_results",
+  "lower_95": 0.02,
+  "pipelines": 8,
+  "practical_threshold": 0.1,
+  "scenarios": 24,
+  "sign_flip_p": 0.5,
+  "upper_95": 0.22,
+  "world_id": "composite_standard"
+}

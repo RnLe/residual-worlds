@@ -1,0 +1,47 @@
+{
+  "blackbox": {
+    "collision": 8,
+    "episodes": 192,
+    "hard_limit": 6,
+    "nonfinite": 1,
+    "successes": 77,
+    "timeout": 99,
+    "training_failed": 1
+  },
+  "fitted_physics": {
+    "collision": 8,
+    "episodes": 192,
+    "hard_limit": 6,
+    "nonfinite": 1,
+    "successes": 86,
+    "timeout": 90,
+    "training_failed": 1
+  },
+  "nominal": {
+    "collision": 8,
+    "episodes": 192,
+    "hard_limit": 6,
+    "nonfinite": 1,
+    "successes": 58,
+    "timeout": 118,
+    "training_failed": 1
+  },
+  "oracle": {
+    "collision": 8,
+    "episodes": 192,
+    "hard_limit": 6,
+    "nonfinite": 1,
+    "successes": 154,
+    "timeout": 22,
+    "training_failed": 1
+  },
+  "residual": {
+    "collision": 8,
+    "episodes": 192,
+    "hard_limit": 6,
+    "nonfinite": 1,
+    "successes": 106,
+    "timeout": 70,
+    "training_failed": 1
+  }
+}

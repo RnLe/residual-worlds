@@ -1,0 +1,100 @@
+{
+  "contrasts": [
+    {
+      "budget": 2048,
+      "contrast_id": "residual_vs_blackbox_success",
+      "estimate": 0.12,
+      "holm_adjusted_p": null,
+      "lower_95": 0.02,
+      "pipelines": 8,
+      "practical_threshold": 0.1,
+      "scenarios": 24,
+      "sign_flip_p": 0.5,
+      "upper_95": 0.22,
+      "world_id": "composite_standard"
+    }
+  ],
+  "pipeline_differences": [
+    0.24474391503462897,
+    0.13790917179417497,
+    0.1488512996057018,
+    0.05587808333823496,
+    0.034596059934197815,
+    0.14946855492646444,
+    0.15737792612139334,
+    0.2011335428063735
+  ],
+  "primary_cell_methods": [
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "nominal",
+      "nonfinite": 1,
+      "success_rate": 0.3,
+      "successes": 58,
+      "timeout": 118,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "fitted_physics",
+      "nonfinite": 1,
+      "success_rate": 0.45,
+      "successes": 86,
+      "timeout": 90,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "blackbox",
+      "nonfinite": 1,
+      "success_rate": 0.4,
+      "successes": 77,
+      "timeout": 99,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "residual",
+      "nonfinite": 1,
+      "success_rate": 0.55,
+      "successes": 106,
+      "timeout": 70,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "collision": 8,
+      "episodes": 192,
+      "hard_limit": 6,
+      "mean_completion_time_restricted_s": 6.0,
+      "method": "oracle",
+      "nonfinite": 1,
+      "success_rate": 0.8,
+      "successes": 154,
+      "timeout": 22,
+      "training_failed": 1,
+      "world_id": "composite_standard"
+    }
+  ],
+  "watermark": "SCHEMATIC DATA - NOT RESULTS"
+}

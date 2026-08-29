@@ -1,0 +1,24 @@
+[
+  {
+    "badge": "Schematic explanation",
+    "caption": "Placeholder layout of the primary paired-effect figure.",
+    "figure_id": "F03_primary_effect",
+    "files": [
+      "F03_primary_effect.svg",
+      "F03_primary_effect@2x.png",
+      "F03_primary_effect.data.json"
+    ],
+    "source": "schematic"
+  },
+  {
+    "badge": "Schematic explanation",
+    "caption": "Placeholder layout of the budget-curve figure.",
+    "figure_id": "F04_budget_curve",
+    "files": [
+      "F04_budget_curve.svg",
+      "F04_budget_curve@2x.png",
+      "F04_budget_curve.data.json"
+    ],
+    "source": "schematic"
+  }
+]

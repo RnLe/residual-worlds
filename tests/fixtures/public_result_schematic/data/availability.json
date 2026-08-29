@@ -1,0 +1,18 @@
+{
+  "evaluated_control_cells": [
+    {
+      "budget": 256,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 2048,
+      "world_id": "composite_standard"
+    },
+    {
+      "budget": 16384,
+      "world_id": "composite_standard"
+    }
+  ],
+  "note": "SCHEMATIC DATA - NOT RESULTS",
+  "prediction_available": true
+}
