@@ -1,0 +1,114 @@
+/* Design tokens. Palette from my thesis style guide: steel blues and warm
+   browns for chrome, Dark Steel for text (never pure black). The ground is
+   warm paper, one step deeper than plain white stock. The five method colors
+   are frozen and shared with the Python figure pipeline; nothing here may
+   drift from analysis/figures.py. No external fonts, no requests. */
+
+:root {
+  /* surfaces */
+  --paper: #f3efe6;
+  --paper-raised: #fbf9f3;
+  --paper-sunken: #eae3d2;
+  --paper-accent: #e3d5bf;
+
+  /* ink: the Dark Steel family; body ink is 5.8:1 on paper */
+  --ink-strong: #3e4a54;
+  --ink: #4f5f6b;
+  --ink-soft: #5f6c77;
+  --ink-faint: #8a939b; /* decorative only, never prose */
+
+  /* lines and links; the raw thesis Steel Blue #4d7b9e is 3.9:1 on this
+     paper, so links use a deepened step and keep the raw tone for hover */
+  --line: #ddd3be;
+  --line-strong: #c4b695;
+  --link: #41688b;
+  --link-hover: #4d7b9e;
+  --focus: #4d7b9e;
+
+  /* thesis accents */
+  --sky: #4e9ae1;
+  --steel: #4d7b9e;
+  --steel-light: #a5c6df;
+  --stark: #eba538;
+  --dusty: #e3b064;
+  --brown: #ab8954;
+  --brown-dark: #857255;
+  --sage: #6b8f71;
+
+  /* methods: frozen, mirrored from analysis/figures.py */
+  --m-nominal: #a65f00;
+  --m-fitted: #009e73;
+  --m-blackbox: #0072b2;
+  --m-residual: #7e57c2;
+  --m-oracle: #6b7280;
+  /* deepened variants for method-colored text (AA on paper) */
+  --m-nominal-deep: #8a4f00;
+  --m-fitted-deep: #007757;
+  --m-blackbox-deep: #005f94;
+  --m-residual-deep: #6a46a8;
+  --m-oracle-deep: #59616d;
+  /* wash fills, backgrounds only */
+  --m-nominal-wash: #efe0c6;
+  --m-fitted-wash: #d8ebe0;
+  --m-blackbox-wash: #d3e4ef;
+  --m-residual-wash: #e4dcf1;
+  --m-oracle-wash: #e2e1dc;
+
+  /* status: the muted set from the thesis figures; fills pair with a
+     -text ink so labels stay readable on paper */
+  --ok: #9dbd86;
+  --ok-text: #55703f;
+  --warn: #c9ae72;
+  --warn-text: #7f6429;
+  --bad: #c98981;
+  --bad-text: #9e4a3f;
+  --info: #8fb8d8;
+  --info-text: #3f658a;
+
+  /* diverging value ramp: dark steel to paper to dusty orange */
+  --ramp-0: #4f5f6b;
+  --ramp-1: #4d7b9e;
+  --ramp-2: #a5c6df;
+  --ramp-3: #ede7d8;
+  --ramp-4: #e3b064;
+
+  /* tables, thesis rule: dark header with white bold text, warm/cool zebra */
+  --table-head: #4f5f6b;
+  --zebra-a: #ede3d1;
+  --zebra-b: #dde8f0;
+
+  /* type */
+  --font-body:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  --font-mono:
+    ui-monospace,
+    "SF Mono",
+    "Cascadia Mono",
+    Consolas,
+    Menlo,
+    monospace;
+  --size-0: 0.8125rem;
+  --size-1: 0.9375rem;
+  --size-2: 1.0625rem;
+  --size-3: 1.375rem;
+  --size-4: 1.75rem;
+  --size-5: 2.25rem;
+
+  /* rhythm, shape, measure */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.75rem;
+  --space-5: 3rem;
+  --space-6: 5rem;
+  --measure: 70ch;
+  --grid-max: 1120px;
+  --radius: 5px;
+  --radius-lg: 10px;
+}

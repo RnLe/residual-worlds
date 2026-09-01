@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Residual Worlds</title>
+    <meta
+      name="description"
+      content="Keep the physics, learn the mismatch: a planned study of residual dynamics models for data-efficient model-predictive control on a two-link arm."
+    />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <p class="qualifier">Simulation study, in progress</p>
+      <h1>Residual Worlds</h1>
+      <p class="tagline">Keep the physics. Learn the mismatch.</p>
+      <p class="subtitle">
+        How much of a robot's dynamics should be learned when the physics is
+        already mostly known?
+      </p>
+    </header>
+    <main id="main">
+      <p class="lead">
+        This is a study I am planning and building, to compare how much of a
+        robot's dynamics is worth learning when the equations are already
+        known. I am running it to extend my understanding of machine learning
+        for robots in the real world, on top of my background in computational
+        physics.
+      </p>
+
+      <section id="premise">
+        <h2>Premise</h2>
+        <div class="prose">
+          <p>
+            A torque-controlled two-link arm reaches three targets in order
+            while avoiding an obstacle. Its rigid-body equations are known, its
+            details are not: the arm carries an unmodelled payload, its joints
+            stick at low speed, and its motors deliver less torque than
+            commanded.
+          </p>
+          <p>
+            The controller chooses actions by simulating them with its model,
+            so model error becomes plan error.
+          </p>
+          <p>
+            Given a small, fixed budget of measured transitions, there are
+            three ways to fix the model: re-fit the physical parameters,
+            replace the physics with a network, or keep the physics and learn
+            only the residual. The study compares all three against the
+            unchanged model and against the exact dynamics, inside one
+            controller, scored by task success rather than prediction error.
+          </p>
+        </div>
+      </section>
+
+      <section id="figure">
+        <figure class="preview" id="preview">
+          <img
+            src="preview.webp"
+            width="960"
+            height="540"
+            alt="Two-link arm in its true world with the nominal model's prediction from a moment earlier drawn faded; the gap between the two hands is the residual, traced per joint below."
+          />
+          <figcaption>
+            <ul class="legend" aria-label="What the figure shows">
+              <li><span class="swatch swatch--model"></span>what the model predicted, 0.3 s ago</li>
+              <li><span class="swatch swatch--world"></span>what the arm did</li>
+              <li><span class="swatch swatch--residual"></span>the gap, and the residual behind it</li>
+            </ul>
+            <p>
+              The nominal equations run forward from the state of a moment ago,
+              under the torques actually applied (faded). The real arm, with
+              payload, friction, and actuator error, ends up elsewhere (solid).
+              That difference is what the residual model has to learn; the
+              strip below traces it per joint. Computed from the study's
+              equations, not a result.
+            </p>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="expect">
+        <h2>What I expect</h2>
+        <div class="bits">
+          <div class="bit">
+            <h3>Structure helps early</h3>
+            <p>
+              The residual model should lead at small data budgets, since
+              gravity, inertia, and coupling are already in the equations. The
+              advantage should shrink as data grows.
+            </p>
+          </div>
+          <div class="bit">
+            <h3>Re-fitting has a ceiling</h3>
+            <p>
+              Fitted physics should hold up where the mismatch is parametric,
+              such as the payload, and fall behind on sticking friction and the
+              actuator dead zone.
+            </p>
+          </div>
+          <div class="bit">
+            <h3>Written down first</h3>
+            <p>
+              The primary contrast and the claim rule are fixed before the run.
+              A null or opposite result is reported the same way.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="guess">
+        <h2>An educated guess</h2>
+        <div class="prose">
+          <p>
+            None of the ingredients are new. Residual physics, learned models
+            inside model-predictive control, and sampling-based planners all
+            have prior work. What is untested is where the residual pays off
+            and by how much, under identical data, matched capacity, one frozen
+            controller, and claim rules fixed in advance.
+          </p>
+          <p>
+            The approach follows from my background. In computational physics a
+            model that disagrees with measurement gets corrected, not
+            discarded. A robot is the same situation: the structure is known,
+            the deviations are small and local, and measured data is expensive.
+          </p>
+        </div>
+      </section>
+
+      <section id="status">
+        <h2>Where it stands</h2>
+        <div class="bits">
+          <div class="bit">
+            <h3>Built</h3>
+            <p>
+              The simulator, verified against analytic, energy, and reference
+              integrator checks. Target worlds, five model conditions, matched
+              training, the planner, evaluation, and bootstrap analysis, run
+              end to end on a smoke configuration.
+            </p>
+          </div>
+          <div class="bit">
+            <h3>Open</h3>
+            <p>
+              Task calibration. Under the draft task parameters even the
+              exact-dynamics reference fails, so the task is being fixed before
+              any model is trained on it.
+            </p>
+          </div>
+          <div class="bit">
+            <h3>Results</h3>
+            <p>
+              None yet. This page will be expanded as the study runs.
+            </p>
+          </div>
+        </div>
+        <p class="source">
+          <a href="https://github.com/RnLe/residual-worlds">github.com/RnLe/residual-worlds</a>
+        </p>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,181 @@
+/* Component vocabulary for the single page: header identity, the preview
+   figure and its controls, short-paragraph tiles, the repository map. */
+
+/* ---- header identity ---- */
+
+.qualifier {
+  display: inline-block;
+  margin: 0;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--ink-soft);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tagline {
+  margin: 0.4rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--ink-soft);
+  max-width: 46rem;
+}
+
+/* ---- the preview figure ---- */
+
+figure {
+  margin: var(--space-4) 0 0;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem;
+}
+
+figure.preview > img,
+.preview-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+figcaption {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+}
+
+figcaption p {
+  max-width: var(--measure);
+}
+
+.legend {
+  list-style: none;
+  margin: 0.5rem 0 0.25rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  color: var(--ink-strong);
+}
+
+.swatch {
+  flex: none;
+  width: 1.4rem;
+  height: 0.55rem;
+  border-radius: 999px;
+}
+
+.swatch--model {
+  background: var(--steel-light);
+}
+
+.swatch--world {
+  background: var(--ink-strong);
+}
+
+.swatch--residual {
+  background: var(--m-residual);
+}
+
+.interactive-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.interactive-readout {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.control-button {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid var(--steel);
+  border-radius: 999px;
+  background: var(--paper-raised);
+  color: var(--link);
+  cursor: pointer;
+}
+
+.control-button:hover:not(:disabled) {
+  background: var(--paper-sunken);
+}
+
+.control-button:disabled {
+  border-color: var(--line);
+  color: var(--ink-faint);
+  cursor: default;
+}
+
+/* ---- short-paragraph tiles ---- */
+
+.bits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+  margin: var(--space-3) 0;
+}
+
+.bit {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-raised);
+  padding: 0.8rem 1rem;
+}
+
+.bit h3 {
+  margin-top: 0;
+}
+
+.bit p {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+/* ---- lead and source lines ---- */
+
+.lead {
+  max-width: var(--measure);
+  margin: var(--space-4) 0 0;
+  color: var(--ink-strong);
+  font-size: 1.05rem;
+}
+
+.source {
+  margin: var(--space-4) 0 var(--space-5);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .bits {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

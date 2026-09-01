@@ -1,0 +1,23 @@
+{
+  "name": "residual-worlds-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Single-page site for the Residual Worlds study with a live preview of model mismatch.",
+  "engines": {
+    "node": ">=22.22",
+    "npm": ">=11.16"
+  },
+  "scripts": {
+    "dev": "vite",
+    "check": "tsc --noEmit && vitest run",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.2.2",
+    "vitest": "^4.1.11"
+  }
+}

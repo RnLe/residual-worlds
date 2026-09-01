@@ -1,0 +1,128 @@
+/* Element defaults and page scaffolding. Light only; the page declares
+   color-scheme light. Everything colored goes through tokens.css. */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--size-2);
+  line-height: 1.6;
+}
+
+/* Shared page width. */
+.site-header,
+main {
+  max-width: var(--grid-max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-header {
+  padding-top: 2rem;
+}
+
+h1 {
+  margin: 0.25rem 0 0;
+  color: var(--ink-strong);
+  font-size: var(--size-4);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  margin: var(--space-5) 0 0.75rem;
+  color: var(--ink-strong);
+  font-size: var(--size-3);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.3rem;
+}
+
+h3 {
+  margin: 1.25rem 0 0.5rem;
+  color: var(--ink-strong);
+  font-size: var(--size-2);
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+/* Prose blocks hold a readable measure; the figure may run wider. */
+.prose {
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--link);
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration-color: currentcolor;
+}
+
+a:focus-visible,
+summary:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+pre {
+  background: var(--paper-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink-strong);
+  color: var(--paper-raised);
+  padding: 0.4rem 0.8rem;
+}
+
+.skip-link:focus-visible {
+  left: 0.5rem;
+  top: 0.5rem;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: var(--size-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
