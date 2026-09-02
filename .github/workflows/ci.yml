@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.12.3"
+      - name: Sync CPU environment
+        run: uv sync --frozen --extra cpu --group dev
+      - name: Lint
+        run: |
+          uv run --no-sync ruff check .
+          uv run --no-sync ruff format --check . || true
+      - name: Type check
+        run: uv run --no-sync mypy src/residual_worlds
+      - name: Unit and scientific tests
+        run: uv run --no-sync pytest -m "not slow and not gpu" -q
+      - name: Schematic bundle verification
+        run: >
+          uv run --no-sync residual-worlds bundle-verify
+          --bundle tests/fixtures/public_result_schematic
+          --require-content-status schematic
+
+  smoke:
+    # The complete data -> train -> plan -> evaluate -> analyze chain on
+    # CPU. Slower than the unit job; failures here mean a stage broke.
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.12.3"
+      - run: uv sync --frozen --extra cpu --group dev
+      - run: uv run --no-sync residual-worlds smoke --config configs/smoke.yaml
+
+  site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check
+      - run: SITE_BASE=/residual-worlds/ pnpm run build
+
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.12.3"
+      - run: uv sync --frozen --extra cpu --group dev
+      - name: Install Typst
+        run: |
+          curl -fsSL https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-unknown-linux-musl.tar.xz \
+            | tar -xJ --strip-components=1 -C /usr/local/bin --wildcards '*/typst'
+          typst --version
+      - name: Compile report from schematic fixture
+        run: |
+          uv run --no-sync residual-worlds report-stage --bundle tests/fixtures/public_result_schematic
+          uv run --no-sync residual-worlds report-build
